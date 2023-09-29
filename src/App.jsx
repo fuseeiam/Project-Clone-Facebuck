@@ -1,10 +1,8 @@
+import Route from "./router/router";
+
 function App() {
-
-
   return (
-    <>
-      <h1>Hello</h1>
-    </>
+    <Route />
   )
 }
 
