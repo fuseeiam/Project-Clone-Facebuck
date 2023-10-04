@@ -3,7 +3,7 @@ import Avatar from "../../../components/Avatar";
 import { useRef, useState } from "react";
 
 
-export default function PictureForm({ title, children }) {
+export default function PictureForm({ title, children, initialSrc, onSave }) {
     const [file, setFile] = useState(null);
     if (file) console.log(URL.createObjectURL(file));
     const inputEl = useRef(null);
@@ -26,7 +26,7 @@ export default function PictureForm({ title, children }) {
                 <div>
                     {file && (
                         <>
-                            <FormButton >Save</FormButton>
+                            <FormButton onClick={() => onSave(file)}>Save</FormButton>
                             <FormButton
                                 onClick={() => {
                                     inputEl.current.value = '';
@@ -45,7 +45,7 @@ export default function PictureForm({ title, children }) {
                 </div>
             </div>
             <div className="flex justify-center">
-                {children(file ? URL.createObjectURL(file) : undefined, () =>
+                {children(file ? URL.createObjectURL(file) : initialSrc, () =>
                     inputEl.current.click()
                 )}
             </div>
