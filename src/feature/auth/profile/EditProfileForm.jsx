@@ -1,23 +1,52 @@
+import { useState } from "react";
 import Avatar from "../../../components/Avatar";
 import { useAuth } from "../../../hooks/use-auth";
 import CoverImage from "./CoverImage";
 import PictureForm from "./PictureForm";
+import Loading from '../../../components/Loading';
+// import axios from "../../../config/axios";
 
-export default function EditProfileForm() {
-    const { authUser } = useAuth();
+export default function EditProfileForm({ onSuccess }) {
+    const [loading, setLoading] = useState(false);
+    const { authUser, updateProfile } = useAuth();
 
-    const uploadProfileImage = (input) => {
-        // FormData
-        console.log(input);
+    const uploadProfileImage = async input => {
+        try {
+            const formData = new FormData();
+            formData.append('profileImage', input);
+            setLoading(true);
+            await updateProfile(formData);
+            onSuccess();
+            // FormData เก็บค่า Key Value
+            // ต้องส่งข้อมูลแบบ binary => multipart/from-data คือ ("profileImage",input)
+            // แต่ไม่สามารถส่งแบบ application/json คือ {profileImage : input}
+        } catch (error) {
+            console.log(err);
+        } finally {
+            setLoading(false)
+        }
     };
-    const uploadCoverImage = (input) => {
-        console.log(input);
+
+
+    const uploadCoverImage = async input => {
+        try {
+            const formData = new FormData();
+            formData.append('coverImage', input);
+            setLoading(true);
+            await updateProfile(formData);
+            onSuccess();
+        } catch (error) {
+            console.log(err);
+        } finally {
+            setLoading(false)
+        }
     };
 
 
-    console.log(authUser.profileImage);
+    // console.log(authUser.profileImage);
     return (
         <div className="flex-col gap-4">
+            {loading && <Loading />}
             <PictureForm
                 title="Profile picture"
                 initialSrc={authUser.profileImage}
@@ -32,7 +61,7 @@ export default function EditProfileForm() {
 
             <PictureForm
                 title="Cover photo"
-                initialSrc={authUser.CoverImage}
+                initialSrc={authUser.coverImage}
                 onSave={uploadCoverImage}
             >
                 {(src, onClick) =>

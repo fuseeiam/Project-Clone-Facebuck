@@ -54,14 +54,12 @@ export default function Dropdown() {
             </div>
             {isOpen && (
                 <div className="w-96 absolute bg-white right-0 translate-y-1 border rounded-lg shadow-xl">
-                    <Link to="profile/aaaaa" onClick={() => setIsOpen(false)}>
+                    <Link to={`/profile/${authUser.id}`} onClick={() => setIsOpen(false)}>
                         <div className=" flex gap-4 p-2 items-center rounded-xl hover:bg-gray-100">
                             <Avatar className="h-14" src={authUser.profileImage} />
                             <div>
                                 <div className="font-semibold">
-                                    {authUser.firstName}
-                                    {" "}
-                                    {authUser.lastName}
+                                    {authUser.firstName} {authUser.lastName}
                                 </div>
                                 <div className="text-sm text-gray-500">See your profile</div>
                             </div>

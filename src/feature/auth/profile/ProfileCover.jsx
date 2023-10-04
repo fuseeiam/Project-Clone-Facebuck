@@ -1,10 +1,10 @@
 import CoverImage from "./CoverImage"
 
-export default function ProfileCover() {
-
+export default function ProfileCover({ coverImage }) {
+    console.log(coverImage);
     return (
         <div className="max-w-6xl max-h-96 overflow-hidden mx-auto rounded-b-lg flex justify-center items-center">
-            <CoverImage />
+            <CoverImage src={coverImage} />
         </div>
     );
 }

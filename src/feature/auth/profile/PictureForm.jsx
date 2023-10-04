@@ -5,7 +5,9 @@ import { useRef, useState } from "react";
 
 export default function PictureForm({ title, children, initialSrc, onSave }) {
     const [file, setFile] = useState(null);
-    if (file) console.log(URL.createObjectURL(file));
+
+    // if (file) console.log(URL.createObjectURL(file));
+
     const inputEl = useRef(null);
     return (
         <div>
