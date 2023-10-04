@@ -45,7 +45,9 @@ export default function PictureForm({ title, children }) {
                 </div>
             </div>
             <div className="flex justify-center">
-                {children(file ? URL.createObjectURL(file) : undefined)}
+                {children(file ? URL.createObjectURL(file) : undefined, () =>
+                    inputEl.current.click()
+                )}
             </div>
         </div>
     );
