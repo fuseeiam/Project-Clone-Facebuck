@@ -8,16 +8,20 @@ import { useAuth } from "../hooks/use-auth";
 export default function ProfilePage() {
     const [profileUser, setProfileUser] = useState({});
     const [statusWithAuthUser, setStatusWithAuthUser] = useState('');
+    const [profileFriends, setProfileFriends] = useState([])
     const { profileId } = useParams();
 
     const { authUser } = useAuth();
+    const isAuthUser = authUser.id === +profileId;
 
     useEffect(() => {
         axios
             .get(`/user/${profileId}`)
             .then(res => {
                 setProfileUser(res.data.user);
+                console.log(res.data.user);
                 setStatusWithAuthUser(res.data.status);
+                setProfileFriends(res.data.friends);
             })
             .catch(err => {
                 console.log(err);
@@ -31,10 +35,16 @@ export default function ProfilePage() {
         <div className="bg-gradient-to-b from-gray-400 to-white shadow pb-4">
             {profileUser ? (
                 <>
-                    <ProfileCover coverImage={profileUser?.coverImage} />
+                    <ProfileCover
+                        coverImage={
+                            isAuthUser ? authUser.coverImage : profileUser?.coverImage
+                        }
+                    />
                     <ProfileInfo
-                        profileUser={profileUser}
+                        profileUser={isAuthUser ? authUser : profileUser}
                         statusWithAuthUser={statusWithAuthUser}
+                        setStatusWithAuthUser={setStatusWithAuthUser}
+                        profileFriends={profileFriends}
                     />
                 </>
             ) : (

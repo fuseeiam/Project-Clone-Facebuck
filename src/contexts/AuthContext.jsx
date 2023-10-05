@@ -35,6 +35,7 @@ export default function AuthContextProvider({ children }) {
 
     const register = async registerInputObject => {
         const res = await axios.post('/auth/register', registerInputObject);
+        console.log(res);
         addAccessToken(res.data.accessToken);
         setAuthUser(res.data.user);
     };

@@ -23,7 +23,7 @@ const registerSchema = Joi.object({
 
 const validateRegister = input => { //undefined / {firstName : ... , lastName : ... ,}
     const { error } = registerSchema.validate(input, { abortEarly: false });
-    console.dir(error);
+
     if (error) {
 
         const result = error.details.reduce((acc, el) => { //{ตัวแรก} เป็น function body , {ตัวที่สอง} เป็น Obj เปล่า
@@ -54,7 +54,7 @@ export default function RegisterForm() {
 
     const { register } = useAuth();
 
-    const handdleChangeInput = e => {
+    const handleChangeInput = e => {
         setInput({ ...input, [e.target.name]: e.target.value });
         // console.log(input);
     };
@@ -78,7 +78,7 @@ export default function RegisterForm() {
             <RegisterInput
                 placeholder="First name"
                 value={input.firstName}
-                onChange={handdleChangeInput}
+                onChange={handleChangeInput}
                 name="firstName"
                 hasError={error.firstName}
             />
@@ -87,7 +87,7 @@ export default function RegisterForm() {
         <div>
             <RegisterInput placeholder="Last name"
                 value={input.lastName}
-                onChange={handdleChangeInput}
+                onChange={handleChangeInput}
                 name="lastName"
                 hasError={error.lastName}
             />
@@ -96,7 +96,7 @@ export default function RegisterForm() {
         <div className="col-span-full">
             <RegisterInput placeholder="Email address or mobile number"
                 value={input.emailOrMobile}
-                onChange={handdleChangeInput}
+                onChange={handleChangeInput}
                 name="emailOrMobile"
                 hasError={error.emailOrMobile}
             />
@@ -105,7 +105,7 @@ export default function RegisterForm() {
         <div className="col-span-full">
             <RegisterInput placeholder="Password" type="password"
                 value={input.password}
-                onChange={handdleChangeInput}
+                onChange={handleChangeInput}
                 name="password"
                 hasError={error.password}
             />
@@ -114,7 +114,7 @@ export default function RegisterForm() {
         <div className="col-span-full">
             <RegisterInput placeholder="Confirm Password" type="password"
                 value={input.confirmPassword}
-                onChange={handdleChangeInput}
+                onChange={handleChangeInput}
                 name="confirmPassword"
                 hasError={error.confirmPassword}
             />

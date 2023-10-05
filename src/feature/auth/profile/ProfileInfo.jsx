@@ -5,16 +5,23 @@ import UnknownAction from "./UnknownAction";
 import FriendAction from "./FriendAction";
 import RequesterAction from "./RequesterAction";
 import ReceiverAction from "./ReceiverAction";
+import { Link } from "react-router-dom";
 
-const mappingObj = {
-    AUTH_USER: <AuthUserAction />,
-    UNKNOWN: <UnknownAction />,
-    FRIEND: <FriendAction />,
-    REQUESTER: <RequesterAction />,
-    RECEIVER: <ReceiverAction />
-};
 
-export default function ProfileInfo({ profileUser, statusWithAuthUser }) {
+export default function ProfileInfo({ profileUser,
+    statusWithAuthUser,
+    setStatusWithAuthUser,
+    profileFriends
+}) {
+    const mappingObj = {
+        AUTH_USER: <AuthUserAction />,
+        UNKNOWN: <UnknownAction setStatusWithAuthUser={setStatusWithAuthUser} />,
+        FRIEND: <FriendAction setStatusWithAuthUser={setStatusWithAuthUser} />,
+        REQUESTER: <RequesterAction setStatusWithAuthUser={setStatusWithAuthUser} />,
+        RECEIVER: <ReceiverAction setStatusWithAuthUser={setStatusWithAuthUser} />
+    };
+
+
     return (
         <div className="max-w-6xl mx-auto flex gap-4 px-4 items-end">
             <div className="-mt-9">
@@ -27,11 +34,13 @@ export default function ProfileInfo({ profileUser, statusWithAuthUser }) {
                 <h2 className="text-2xl font-bold">
                     {profileUser.firstName} {profileUser.lastName}
                 </h2>
-                <span className="block text-gray-500 font-semibold mb-2">6 friend</span>
+                <span className="block text-gray-500 font-semibold mb-2">{profileFriends.length}friends</span>
                 <div className="flex -space-x-2">
-                    <Avatar className="h-8" />
-                    <Avatar className="h-8" />
-                    <Avatar className="h-8" />
+                    {profileFriends.map(el => (
+                        <Link key={el.id} to={`/profile/${el.id}`}>
+                            <Avatar className="h-8" src={el.profileImage} />
+                        </Link>
+                    ))}
                 </div>
             </div>
 
