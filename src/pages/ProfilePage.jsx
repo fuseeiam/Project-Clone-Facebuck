@@ -7,24 +7,22 @@ import { useAuth } from "../hooks/use-auth";
 
 export default function ProfilePage() {
     const [profileUser, setProfileUser] = useState({});
+    const [statusWithAuthUser, setStatusWithAuthUser] = useState('');
     const { profileId } = useParams();
 
     const { authUser } = useAuth();
 
     useEffect(() => {
-        if (authUser.id === +profileId) {
-            setProfileUser(authUser)
-        } else {
-            axios
-                .get(`/user/${profileId}`)
-                .then(res => {
-                    setProfileUser(res.data.user);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        }
-    }, [profileId, authUser]);
+        axios
+            .get(`/user/${profileId}`)
+            .then(res => {
+                setProfileUser(res.data.user);
+                setStatusWithAuthUser(res.data.status);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, [profileId]);
 
     // axios.get('/user/'+profileId).then(res => setProfileUser(res.data.user))
     // ใช้ไม่ได้ จะเกิด infinty Loop
@@ -34,14 +32,16 @@ export default function ProfilePage() {
             {profileUser ? (
                 <>
                     <ProfileCover coverImage={profileUser?.coverImage} />
-                    <ProfileInfo profileUser={profileUser} />
+                    <ProfileInfo
+                        profileUser={profileUser}
+                        statusWithAuthUser={statusWithAuthUser}
+                    />
                 </>
             ) : (
                 <h1 className="text-center p-8 text-3xl font-bold">
                     404 !!! user not found
                 </h1>
-            )
-            }
+            )}
         </div>
     )
 }
