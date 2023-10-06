@@ -1,3 +1,26 @@
+import { useState } from "react";
+import CreatePostButton from "../feature/post/CreatePostButton";
+import PostList from "../feature/post/PostList";
+import axios from "../config/axios";
+import { useEffect } from "react";
+
 export default function HomePage() {
-    return <h1>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque temporibus perspiciatis reiciendis est dicta architecto, praesentium ratione deleniti at atque animi soluta iure, eum fuga nulla labore cumque. Temporibus, id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, saepe, itaque minima temporibus esse corporis laudantium corrupti in laboriosam odit eveniet dolore modi voluptatum. Facilis eum nihil harum dicta quo!elit. Itaque temporibus perspiciatis reiciendis est dicta architecto, praesentium ratione deleniti at atque animi soluta iure, eum fuga nulla labore cumque. Temporibus, id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, saepe, itaque minima temporibus esse corporis laudantium corrupti in laboriosam odit eveniet dolore modi voluptatum. Facilis eum nihil harum dicta quo!elit. Itaque temporibus perspiciatis reiciendis est dicta architecto, praesentium ratione deleniti at atque animi soluta iure, eum fuga nulla labore cumque. Temporibus, id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, saepe, itaque minima temporibus esse corporis laudantium corrupti in laboriosam odit eveniet dolore modi voluptatum. Facilis eum nihil harum dicta quo!elit. Itaque temporibus perspiciatis reiciendis est dicta architecto, praesentium ratione deleniti at atque animi soluta iure, eum fuga nulla labore cumque. Temporibus, id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, saepe, itaque minima temporibus esse corporis laudantium corrupti in laboriosam odit eveniet dolore modi voluptatum. Facilis eum nihil harum dicta quo!elit. Itaque temporibus perspiciatis reiciendis est dicta architecto, praesentium ratione deleniti at atque animi soluta iure, eum fuga nulla labore cumque. Temporibus, id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, saepe, itaque minima temporibus esse corporis laudantium corrupti in laboriosam odit eveniet dolore modi voluptatum. Facilis eum nihil harum dicta quo!elit. Itaque temporibus perspiciatis reiciendis est dicta architecto, praesentium ratione deleniti at atque animi soluta iure, eum fuga nulla labore cumque. Temporibus, id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, saepe, itaque minima temporibus esse corporis laudantium corrupti in laboriosam odit eveniet dolore modi voluptatum. Facilis eum nihil harum dicta quo!elit. Itaque temporibus perspiciatis reiciendis est dicta architecto, praesentium ratione deleniti at atque animi soluta iure, eum fuga nulla labore cumque. Temporibus, id. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, saepe, itaque minima temporibus esse corporis laudantium corrupti in laboriosam odit eveniet dolore modi voluptatum. Facilis eum nihil harum dicta quo!</h1>;
+    const [allPost, setAllPost] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get('/post/friend')
+            .then(res => {
+                setAllPost(res.data.posts);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, []);
+    return (
+        <div className="max-w-[44rem] mx-auto px-8 py-6 flex flex-col gap-4">
+            <CreatePostButton />
+            <PostList allPost={allPost} />
+        </div>
+    );
 }
