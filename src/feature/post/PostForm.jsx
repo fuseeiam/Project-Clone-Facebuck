@@ -3,10 +3,10 @@ import { useAuth } from "../../hooks/use-auth"
 import { ImageIcon } from "../../icons";
 import CreatePostButton from "./CreatePostButton";
 import { useState } from "react";
-import axios from "../../config/axios";
 import Loading from "../../components/Loading";
+import axios from "../../config/axios";
 
-export default function PostForm({ onSuccess }) {
+export default function PostForm({ onSuccess, onSubmit }) {
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
@@ -24,7 +24,9 @@ export default function PostForm({ onSuccess }) {
                 formData.append('message', message);
             }
             setLoading(true)
-            await axios.post('/post', formData);
+            // await axios.post('/post', for mData); 
+            // ย้ายไป HomePage.jsx ใน const createPost
+            await onSubmit(formData);
             onSuccess();
         } catch (err) {
             console.log(err);

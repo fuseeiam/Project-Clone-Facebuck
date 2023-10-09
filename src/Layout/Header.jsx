@@ -4,7 +4,7 @@ import Menu from './Menu';
 import Dropdown from "./Dropdown";
 
 export default function Header() {
-    return <header className="grid grid-cols-3 px-4 bg-white shadow-lg sticky top-0">
+    return <header className="grid grid-cols-3 px-4 bg-white shadow-lg sticky top-0 z-30">
         <div className="py-2 justify-start">
             <Link to="/">
                 <FacebookIcon />
